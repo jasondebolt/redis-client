@@ -1,0 +1,40 @@
+version: "3.7"
+
+networks:
+  webnet:
+    driver: bridge
+
+services:
+  redis_server:
+    container_name: redis_server_1
+    image: 'bitnami/redis:latest'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - type: bind
+        source: ./data
+        target: /bitnamic/redis/data
+        read_only: false
+        volume:
+          nocopy: true
+    ports:
+      - 6379
+    expose:
+      - 6379
+    networks:
+      - webnet
+  redis_client:
+    container_name: redis_client_1
+    image: redis_client
+    build:
+      context: ./
+      dockerfile: Dockerfile.redis_client
+    networks:
+      - webnet
+    volumes:
+      - type: bind
+        source: .
+        target: /app
+        read_only: true
+        volume:
+          nocopy: true

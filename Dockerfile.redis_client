@@ -1,0 +1,53 @@
+FROM amazonlinux:2018.03
+
+RUN yum -y update
+RUN yum -y install \
+  autoconf \
+  automake \
+  bzip2 \
+  epel-relepipelinese \
+  freetype-devel \
+  gcc \
+  gcc-c++ \
+  gettext \
+  git \
+  golang \
+  iconv-devel \
+  libcurl-devel \
+  libcurl-devel \
+  libevent \
+  libevent-devel \
+  libffi-devel \
+  libjpeg-devel \
+  libpng-devel \
+  libtool \
+  libxml2-devel \
+  libxslt-devel \
+  libyaml-devel \
+  make \
+  nasm \
+  openssl-devel \
+  patch \
+  pcre-devel \
+  python-devel \
+  python27 \
+  python27-devel \
+  readline \
+  readline-devel \
+  sqlite-devel \
+  sudo \
+  wget \
+  which \
+  zlib \
+  zlib-devel
+
+# PIP
+RUN curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
+RUN python get-pip.py
+RUN pip install --ignore-installed redis faker
+
+# Redis
+RUN wget http://download.redis.io/redis-stable.tar.gz && tar xvzf redis-stable.tar.gz && cd redis-stable && make
+RUN cp /redis-stable/src/redis-cli /usr/bin/
+
+WORKDIR /app
