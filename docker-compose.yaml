@@ -10,13 +10,6 @@ services:
     image: 'bitnami/redis:latest'
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
-    volumes:
-      - type: bind
-        source: ./data
-        target: /bitnamic/redis/data
-        read_only: false
-        volume:
-          nocopy: true
     ports:
       - 6379
     expose:

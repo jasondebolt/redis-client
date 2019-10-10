@@ -16,19 +16,21 @@ Not everyone has a Redis server and ready-to-go local environment for querying a
 docker-compose up
 ```
 
-## Running the Redis client container shell
-```
-docker-compose run redis_client /bin/bash
-```
-
 ## Connecting to the Redis-CLI on the Redis client container
 ```
 docker-compose run redis_client /bin/bash
 
 # redis-cli -h redis_server
+
+redis_server:6379> set foo bar
+OK
+redis_server:6379> get foo
+"bar"
 ```
 
 ## Running a python script in the Redis client container against the Redis server
 ```
 docker-compose run redis_client python redis_client.py create_keys
+
+docker-compose run redis_client python redis_client.py db_size   # Returns 1000
 ```
