@@ -13,10 +13,11 @@ docker-compose run redis_client /bin/bash
 ## Connecting to the Redis-CLI on the Redis client container
 ```
 docker-compose run redis_client /bin/bash
-bash-4.2# redis-cli -h redis_server
+
+# redis-cli -h redis_server
 ```
 
 ## Running a python script in the Redis client container against the Redis server
 ```
-docker-compose run redis_client python redis_client.py
+docker-compose run redis_client python redis_client.py create_keys
 ```
