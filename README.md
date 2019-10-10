@@ -1,4 +1,4 @@
-# Docker Composed Redis Server, Redis Client, Python 2.7
+# Docker Composed Redis Server and Redis Client
 
 ## Building the containers (running only Redis server container)
 ```
