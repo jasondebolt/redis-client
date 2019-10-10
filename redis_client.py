@@ -13,7 +13,7 @@ python redis_client.py [create_sorted_set | create_keys | delete_sorted_set]
 r = redis.Redis(host='redis_server', port=6379, db=0)
 fake = Faker()
 
-MAPPINGS = 5000000
+MAPPINGS = 1000
 
 def _get_rand_string(n):
     return ''.join(choice(ascii_lowercase) for i in range(n))
