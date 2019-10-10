@@ -13,7 +13,11 @@ python redis_client.py [create_sorted_set | create_keys | delete_sorted_set]
 r = redis.Redis(host='redis_server', port=6379, db=0)
 fake = Faker()
 
-MAPPINGS = 1000
+MAPPINGS = 1000000
+MIN_RANK = 0
+MAX_RANK = 9
+SLEEP_SECONDS = 1
+SORTED_SET_NAME = 'class2'
 
 def _get_rand_string(n):
     return ''.join(choice(ascii_lowercase) for i in range(n))
@@ -30,7 +34,7 @@ def create_keys():
 
 def create_sorted_set():
     for i in range(MAPPINGS):
-        name = 'class2'
+        name = SORTED_SET_NAME
         value = 'class.{0}::person.{1}'.format(_get_rand_string(35), _get_rand_string(35))
         amount = randint(0, 100)
         #print(name, value, amount)
@@ -40,11 +44,16 @@ def create_sorted_set():
 
 def delete_sorted_set():
     i = 0
-    while r.zcard('class2') > 0:
-        print('Deleting 100 members (page {0})'.format(i))
-        r.zremrangebyrank('class2', 0, 99)
-        time.sleep(1)
+    sum = 0
+    rank_range = MAX_RANK - MIN_RANK + 1
+    zcard_value = r.zcard(SORTED_SET_NAME)
+    while zcard_value > 0:
+        print('Deleting {0} members ({1} deleted, {2:.20%} complete) (page {3})'.format(rank_range, sum, sum/float(zcard_value), i))
+        r.zremrangebyrank(SORTED_SET_NAME, MIN_RANK, MAX_RANK)
+        time.sleep(SLEEP_SECONDS)
         i += 1
+        sum += rank_range
+        zcard_value = r.zcard(SORTED_SET_NAME)
 
 
 def db_size():
