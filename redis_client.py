@@ -47,8 +47,10 @@ def delete_sorted_set():
     sum = 0
     rank_range = MAX_RANK - MIN_RANK + 1
     zcard_value = r.zcard(SORTED_SET_NAME)
+    hourly_rate = (rank_range/SLEEP_SECONDS) * 3600
     while zcard_value > 0:
-        print('Deleting {0} members ({1} deleted, {2:.20%} complete) (page {3})'.format(rank_range, sum, sum/float(zcard_value), i))
+        hours_remaining = zcard_value / float(hourly_rate)
+        print('Deleting {0} members ({1} deleted, {2} hours remaining) (page {3})'.format(rank_range, sum, hours_remaining, i))
         r.zremrangebyrank(SORTED_SET_NAME, MIN_RANK, MAX_RANK)
         time.sleep(SLEEP_SECONDS)
         i += 1
