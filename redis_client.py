@@ -17,7 +17,7 @@ MAPPINGS = 1000000
 MIN_RANK = 0
 MAX_RANK = 9
 SLEEP_SECONDS = 1
-SORTED_SET_NAME = 'class2'
+SORTED_SET_NAME = 'foobar'
 
 def _get_rand_string(n):
     return ''.join(choice(ascii_lowercase) for i in range(n))
@@ -25,7 +25,7 @@ def _get_rand_string(n):
 
 def create_keys():
     for i in range(MAPPINGS):
-        name = 'class.{0}::person.{1}'.format(_get_rand_string(35), _get_rand_string(35))
+        name = 'test1.{0}::field1.{1}'.format(_get_rand_string(35), _get_rand_string(35))
         value = randint(0, 100)
         #print(name, value, amount)
         # Increment the score of ``value`` in sorted set ``name`` by ``amount``
@@ -35,7 +35,7 @@ def create_keys():
 def create_sorted_set():
     for i in range(MAPPINGS):
         name = SORTED_SET_NAME
-        value = 'class.{0}::person.{1}'.format(_get_rand_string(35), _get_rand_string(35))
+        value = 'test1.{0}::field1.{1}'.format(_get_rand_string(35), _get_rand_string(35))
         amount = randint(0, 100)
         #print(name, value, amount)
         # Increment the score of ``value`` in sorted set ``name`` by ``amount``
